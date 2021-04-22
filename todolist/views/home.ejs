@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en">
+    <%- include('./partials/head.ejs') %>
+<body>
+    <nav class="navbar navbar-expand-md navbar-dark bg-dark ">
+        <a class="navbar-brand" href="#">To-Do List</a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarsExampleDefault" aria-controls="navbarsExampleDefault" aria-expanded="false" aria-label="Toggle navigation">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+  
+        <div class="collapse navbar-collapse" id="navbarsExampleDefault">
+          <ul class="navbar-nav mr-auto">
+            <li class="nav-item active">
+              <a class="nav-link" href="/home">Tasks <span class="sr-only">(current)</span></a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="/home/completed">Completed</a>
+            </li>
+          </ul>
+        </div>
+        <div class="my-2 my-lg-0">
+            <a href="/logout"class="btn btn-outline-success my-2 my-sm-0" type="submit">Logout</a>
+        </div>
+      </nav>
+      <main role="main" class="container">
+        <div class="mt-5 mr-auto ml-auto starter-template mb-5">
+            <div class=" mt-5 mb-4 text-center home-header rounded p-1"><h1 class="text-white">Welcome, <%- account.fname %>!&nbsp; Here are your tasks...</h1></div>
+            <% if (JSON.stringify(locals.msg)!='{}') { %>
+				<div class="alert alert-<%- msg.code %> ml-auto mr-auto mb-2 alert-dismissible fade show w-50" role="alert">
+					<strong><%- msg.status %></strong> <%- msg.message %>
+					<button type="button" class="close" data-dismiss="alert" aria-label="Close">
+					  <span aria-hidden="true">&times;</span>
+					</button>
+				  </div>
+			<% } %>
+            <div class="row  w-100  rounded m-auto ">
+                <div class="col-lg-4 p-3 home-col-add-task hidden-xs-down bg-white shadow-sm rounded">
+                    <div class="m-auto text-center w-100 mb-3">
+                        <a href="/home/completed" class="btn btn-sm btn-block btn-success">View Completed Tasks</a>
+                    </div>
+                    <form action="/home/create" method="POST" class="signin-form w-100 mt-2">
+                        <div class="form-group mb-3">
+                            <label class="text-dark font-weight-bold" for="password">Add a new task:</label>
+                            <textarea name="task" class="form-control-textarea" rows="3" placeholder="Type the new task here..." required></textarea>
+                        </div>
+                        <div class="form-group w-50 float-right">
+                            <input type="submit" class="form-control btn btn-primary submit px-3 " value="Add Task">
+                        </div>
+                    </form>
+                </div>
+                <div class="col-lg-8 bg-white shadow-sm rounded border-left p-2">
+                    <div class="list-group">
+                        <div class="list-group-item  task-list text-center text-dark">
+                            <b> My Task Lists</b>
+                        </div>
+                        <% if(data.length){ %>
+                            <% for(var x=0;x<data.length;x++){ %>
+                        <div class="list-group-item ">
+                            <div class="row">
+                                <div class="col-sm-7"><%- data[x].task %></div>
+                                <div class="col-sm-2"><%- data[x].created_at %></div>
+                                <div class="col-sm-1 ">
+                                    <a href="/home/done/<%- data[x].id %>" class=" text-success" data-toggle="tooltip" data-placement="bottom" title="Task Done"><i class="fas fa-check-square"></i></a>
+                                </div>
+                                <div class="col-sm-1 ">
+                                    <a href="#" class="text-warning" data-toggle="modal" data-target="#exampleModal<%- data[x].id %>" data-toggle="tooltip" data-placement="bottom" title="Edit Task"><i class="fas fa-edit"></i></a>
+                                </div>
+                                <div class="col-sm-1 ">
+                                    <a href="/home/delete/<%- data[x].id %>" class="text-danger" data-toggle="tooltip" data-placement="bottom" title="Delete Task"><i class="fas fa-trash-alt"></i></a>
+                                </div>
+                            </div>
+                            <!-- Modal -->
+                            <div class="modal fade" id="exampleModal<%- data[x].id %>" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                <div class="modal-dialog" role="document">
+                                    <div class="modal-content">
+                                    <div class="modal-header">
+                                        <h5 class="modal-title" id="exampleModalLabel">Edit Task</h5>
+                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                        <span aria-hidden="true">&times;</span>
+                                        </button>
+                                    </div>
+                                    <div class="modal-body">
+                                        <form action="/home/edit/<%- data[x].id %>" method="POST" class="signin-form w-100 ">
+                                            <div class="form-group mb-3">
+                                                <label class="text-dark font-weight-bold" for="password">Edit selected task:</label>
+                                                <textarea name="task" class="form-control-textarea" rows="3" placeholder="Type the new task here..." required><%- data[x].task %></textarea>
+                                            </div>
+                                        
+                                    </div>
+                                    <div class="modal-footer">
+                                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                                        <button type="submit" class="btn btn-primary">Save changes</button>
+                                        </form>
+                                    </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- end of modal -->
+                        </div>
+                        <% } %>
+                        <% }else{ %>
+                            <div class="jumbotron jumbotron-fluid">
+                                <div class="container text-center">
+                                  <h1 class="display-4">No tasks to complete</h1>
+                                  <p class="lead">Add something to do here...</p>
+                                </div>
+                            </div>
+                        <% } %>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+    <%- include('./partials/scripts.ejs') %>
+</body>
+</html>

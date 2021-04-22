@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+    <%- include('./partials/head.ejs') %>
+<body>
+    <section class="ftco-section">
+		<div class="container">
+			<div class="row justify-content-center">
+				<div class="col-md-6 text-center mb-4">
+					<h2 class="heading-section">Register to create To-Do List</h2>
+				</div>
+			</div>
+            <% if (locals.data) { %>
+				<div class="alert alert-<%- data.code %> ml-auto mr-auto mb-2 alert-dismissible fade show w-50" role="alert">
+					<strong><%- data.status %></strong> <%- data.message %>
+					<button type="button" class="close" data-dismiss="alert" aria-label="Close">
+					  <span aria-hidden="true">&times;</span>
+					</button>
+				  </div>
+			<% } %>
+			<div class="row justify-content-center">
+				<div class="col-md-12 col-lg-10">
+					<div class="wrap d-md-flex">
+						<div class="login-wrap p-4 p-lg-5 d-flex align-items-center order-md-last">
+                            <form action="/account/register" method="post" class="signin-form w-100">
+                                <div class="form-group mb-1 ">
+                                    <label class="label" for="name">Name</label>
+                                    <div class="form-row">
+                                        <div class="col">
+                                            <input name="fname" type="text" class="form-control" placeholder="First name" required>
+                                        </div>
+                                        <div class="col">
+                                            <input name="lname" type="text" class="form-control" placeholder="Last name" required>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="form-group mb-1 ">
+                                    <label class="label" for="name">Username</label>
+                                    <input name="username" type="text" class="form-control " placeholder="Username" required>
+                                </div>
+                                <div class="form-group mb-3">
+                                    <label class="label" for="password">Password</label>
+                                    <input name="password" type="password" class="form-control" placeholder="Password" required>
+                                </div>
+                                <div class="form-group mb-3">
+                                    <label class="label" for="password">Repeat Password</label>
+                                    <input name="repeatPassword" type="password" class="form-control" placeholder="Password" required>
+                                </div>
+                                <div class="form-group">
+                                    <button type="submit" class="form-control btn btn-primary submit px-3">Sign Up</button>
+                                </div>
+                            </form>
+			            </div>
+						<div class="text-wrap p-4 p-lg-5 text-center align-items-center d-flex">
+                            <div class="text w-100">
+								<h2>Login to To-do List</h2>
+								<p>Already have an account?</p>
+								<a href="/" class="btn btn-white btn-outline-white">Sign In</a>
+							</div>
+		                </div>
+		            </div>
+				</div>
+			</div>
+		</div>
+	</section>
+    <%- include('./partials/scripts.ejs') %>
+</body>
+</html>

@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+    <%- include('./partials/head.ejs') %>
+<body>
+    <nav class="navbar navbar-expand-md navbar-dark bg-dark ">
+        <a class="navbar-brand" href="#">To-Do List</a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarsExampleDefault" aria-controls="navbarsExampleDefault" aria-expanded="false" aria-label="Toggle navigation">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+  
+        <div class="collapse navbar-collapse" id="navbarsExampleDefault">
+          <ul class="navbar-nav mr-auto">
+            <li class="nav-item ">
+              <a class="nav-link" href="/home">Tasks </a>
+            </li>
+            <li class="nav-item active">
+              <a class="nav-link" href="/home/completed">Completed<span class="sr-only">(current)</span></a>
+            </li>
+          </ul>
+        </div>
+        <div class="my-2 my-lg-0">
+          <a href="/logout"class="btn btn-outline-success my-2 my-sm-0" type="submit">Logout</a>
+      </div>
+      </nav>
+      <main role="main" class="container">
+        <div class="mt-5 mr-auto ml-auto starter-template mb-5">
+            <div class="list-group">
+                <div class="list-group-item list-group-item-action task-list-complete text-center">
+                    <b>Completed Tasks</b>
+                </div>
+                <% if(data.length){ %>
+                  <% for(var x=0;x<data.length;x++){ %>
+                <div class="list-group-item list-group-item-action">
+                    <div class="row">
+                        <div class="col-sm-7"><%- data[x].task %></div>
+                        <div class="col-sm-2 ">
+                          <%- data[x].completed_date %>
+                        </div>
+                        <div class="col-sm-2 ">
+                          <%- data[x].completed_time %>
+                        </div>
+                        <div class="col-sm-1 ">
+                            <a href="/home/delete/<%- data[x].id %>" class="text-danger" data-toggle="tooltip" data-placement="bottom" title="Delete completed task"><i class="fas fa-trash-alt" ></i></a>
+                        </div>
+                    </div>
+                </div>
+                <% } %>
+                <% }else{ %>
+                    <div class="jumbotron jumbotron-fluid">
+                        <div class="container text-center">
+                          <h1 class="display-4">No tasks completed yet</h1>
+                          <p class="lead">Try to complete some task and lessen your burden...</p>
+                        </div>
+                    </div>
+                <% } %>
+            </div>
+        </div>     
+    </main>
+    <%- include('./partials/scripts.ejs') %>
+</body>
+</html>
